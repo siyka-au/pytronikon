@@ -251,7 +251,7 @@ def _discover_counters(transport: ElektronikonTransport, language_map: dict[str,
                 "label": _mpl_label(language_map, mpl),
                 "counter_unit": read_byte(raw, 1),
                 "live_selectors": [
-                    {"index": 0x3008, "subindex": counter_index, "selector": format_selector(0x3008, counter_index)}
+                    {"index": 0x3008, "subindex": subindex, "selector": format_selector(0x3008, subindex)}
                 ],
             })
 
@@ -280,7 +280,7 @@ def _discover_special_protections(transport: ElektronikonTransport, language_map
                 "mpl": mpl,
                 "label": _mpl_label(language_map, mpl),
                 "live_selectors": [
-                    {"index": 0x3009, "subindex": index - 0x2330 + 1, "selector": format_selector(0x3009, index - 0x2330 + 1)}
+                    {"index": 0x3009, "subindex": index - 0x2300 + 1, "selector": format_selector(0x3009, index - 0x2300 + 1)}
                 ],
             })
 
