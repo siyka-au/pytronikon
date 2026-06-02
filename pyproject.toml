@@ -1,0 +1,48 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "pytronikon"
+version = "0.1.0"
+description = "Python client for Atlas Copco Elektronikon MkV controllers with mkv.cgi"
+readme = "README.md"
+license = { text = "MIT" }
+authors = [{ name = "siyka-au" }]
+keywords = ["elektronikon", "atlas-copco", "control", "cgi"]
+requires-python = ">=3.13"
+dependencies = []
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Topic :: System :: Hardware",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=7.0", "ruff>=0.0.292"]
+
+[project.scripts]
+pytronikon = "pytronikon.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/siyka-au/pytronikon"
+Repository = "https://github.com/siyka-au/pytronikon"
+Issues = "https://github.com/siyka-au/pytronikon/issues"
+
+[tool.hatch.version]
+path = "src/pytronikon/__init__.py"
+
+[tool.ruff]
+target-version = "py313"
+line-length = 100
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+markers = [
+    "integration: marks tests as integration tests (deselect with '-m \"not integration\"')",
+]

@@ -1,0 +1,393 @@
+{
+  "host": "192.168.100.100",
+  "language": "English",
+  "discovered_at": "2026-06-02T02:27:06.348394+00:00",
+  "family_counts": {
+    "analog_inputs": 4,
+    "calculated_analog_inputs": 0,
+    "digital_inputs": 3,
+    "digital_outputs": 6,
+    "analog_outputs": 0,
+    "counters": 6,
+    "special_protections": 4,
+    "spm": 0,
+    "service_plan": 0,
+    "machine_state": 1,
+    "converters": 0,
+    "internal_data": 0,
+    "preferences": 1,
+    "es": 1
+  },
+  "points": {
+    "analog_inputs": [
+      {
+        "id": "analog_inputs:compressor-outlet",
+        "label": "Compressor Outlet",
+        "family": "analog_inputs",
+        "unit": "bar",
+        "input_type": 0,
+        "display_precision": 1,
+        "live_selectors": [
+          {
+            "index": 12290,
+            "subindex": 1
+          }
+        ],
+        "index": 8208
+      },
+      {
+        "id": "analog_inputs:element-outlet",
+        "label": "Element Outlet",
+        "family": "analog_inputs",
+        "unit": "°C",
+        "input_type": 1,
+        "display_precision": 0,
+        "live_selectors": [
+          {
+            "index": 12290,
+            "subindex": 2
+          }
+        ],
+        "index": 8209
+      },
+      {
+        "id": "analog_inputs:dryer-pdp",
+        "label": "Dryer PDP",
+        "family": "analog_inputs",
+        "unit": "°C",
+        "input_type": 1,
+        "display_precision": 0,
+        "live_selectors": [
+          {
+            "index": 12290,
+            "subindex": 3
+          }
+        ],
+        "index": 8210
+      },
+      {
+        "id": "analog_inputs:ambient-air",
+        "label": "Ambient Air",
+        "family": "analog_inputs",
+        "unit": "°C",
+        "input_type": 1,
+        "display_precision": 0,
+        "live_selectors": [
+          {
+            "index": 12290,
+            "subindex": 4
+          }
+        ],
+        "index": 8211
+      }
+    ],
+    "digital_inputs": [
+      {
+        "id": "digital_inputs:rtd-1",
+        "label": null,
+        "family": "digital_inputs",
+        "type": "digital",
+        "live_selectors": [
+          {
+            "index": 12291,
+            "subindex": 1
+          }
+        ],
+        "index": 8368
+      },
+      {
+        "id": "digital_inputs:rtd-2",
+        "label": null,
+        "family": "digital_inputs",
+        "type": "digital",
+        "live_selectors": [
+          {
+            "index": 12291,
+            "subindex": 2
+          }
+        ],
+        "index": 8369
+      },
+      {
+        "id": "digital_inputs:rtd-3",
+        "label": null,
+        "family": "digital_inputs",
+        "type": "digital",
+        "live_selectors": [
+          {
+            "index": 12291,
+            "subindex": 3
+          }
+        ],
+        "index": 8370
+      }
+    ],
+    "digital_outputs": [
+      {
+        "id": "digital_outputs:rtd-1",
+        "label": null,
+        "family": "digital_outputs",
+        "type": "digital",
+        "live_selectors": [
+          {
+            "index": 12293,
+            "subindex": 1
+          }
+        ],
+        "index": 8448
+      },
+      {
+        "id": "digital_outputs:rtd-2",
+        "label": null,
+        "family": "digital_outputs",
+        "type": "digital",
+        "live_selectors": [
+          {
+            "index": 12293,
+            "subindex": 2
+          }
+        ],
+        "index": 8449
+      },
+      {
+        "id": "digital_outputs:rtd-3",
+        "label": null,
+        "family": "digital_outputs",
+        "type": "digital",
+        "live_selectors": [
+          {
+            "index": 12293,
+            "subindex": 3
+          }
+        ],
+        "index": 8450
+      },
+      {
+        "id": "digital_outputs:rtd-4",
+        "label": null,
+        "family": "digital_outputs",
+        "type": "digital",
+        "live_selectors": [
+          {
+            "index": 12293,
+            "subindex": 4
+          }
+        ],
+        "index": 8451
+      },
+      {
+        "id": "digital_outputs:rtd-5",
+        "label": null,
+        "family": "digital_outputs",
+        "type": "digital",
+        "live_selectors": [
+          {
+            "index": 12293,
+            "subindex": 5
+          }
+        ],
+        "index": 8452
+      },
+      {
+        "id": "digital_outputs:rtd-6",
+        "label": null,
+        "family": "digital_outputs",
+        "type": "digital",
+        "live_selectors": [
+          {
+            "index": 12293,
+            "subindex": 6
+          }
+        ],
+        "index": 8453
+      }
+    ],
+    "counters": [
+      {
+        "id": "counters:running-hours",
+        "label": "Running Hours",
+        "family": "counters",
+        "unit": "hours",
+        "counter_unit": 0,
+        "live_selectors": [
+          {
+            "index": 12295,
+            "subindex": 1
+          }
+        ],
+        "index": 9735
+      },
+      {
+        "id": "counters:loaded-hours",
+        "label": "Loaded Hours",
+        "family": "counters",
+        "unit": "hours",
+        "counter_unit": 0,
+        "live_selectors": [
+          {
+            "index": 12295,
+            "subindex": 2
+          }
+        ],
+        "index": 9735
+      },
+      {
+        "id": "counters:motor-starts",
+        "label": "Motor Starts",
+        "family": "counters",
+        "unit": "count",
+        "counter_unit": 1,
+        "live_selectors": [
+          {
+            "index": 12295,
+            "subindex": 3
+          }
+        ],
+        "index": 9735
+      },
+      {
+        "id": "counters:load-relay",
+        "label": "Load Relay",
+        "family": "counters",
+        "unit": "count",
+        "counter_unit": 1,
+        "live_selectors": [
+          {
+            "index": 12295,
+            "subindex": 4
+          }
+        ],
+        "index": 9735
+      },
+      {
+        "id": "counters:dryer-starts",
+        "label": "Dryer Starts",
+        "family": "counters",
+        "unit": "count",
+        "counter_unit": 1,
+        "live_selectors": [
+          {
+            "index": 12295,
+            "subindex": 5
+          }
+        ],
+        "index": 9735
+      },
+      {
+        "id": "counters:module-hours",
+        "label": "Module Hours",
+        "family": "counters",
+        "unit": "hours",
+        "counter_unit": 0,
+        "live_selectors": [
+          {
+            "index": 12295,
+            "subindex": 7
+          }
+        ],
+        "index": 9735
+      }
+    ],
+    "special_protections": [
+      {
+        "id": "special_protections:motor-rotation-protection",
+        "label": "Motor Rotation Protection",
+        "family": "special_protections",
+        "live_selectors": [
+          {
+            "index": 12302,
+            "subindex": 1
+          }
+        ],
+        "index": 8960
+      },
+      {
+        "id": "special_protections:dryer-dewpoint-protection",
+        "label": "Dryer Dewpoint Protection",
+        "family": "special_protections",
+        "live_selectors": [
+          {
+            "index": 12302,
+            "subindex": 2
+          }
+        ],
+        "index": 8961
+      },
+      {
+        "id": "special_protections:no-valid-pressure-control",
+        "label": "No Valid Pressure Control",
+        "family": "special_protections",
+        "live_selectors": [
+          {
+            "index": 12302,
+            "subindex": 3
+          }
+        ],
+        "index": 8962
+      },
+      {
+        "id": "special_protections:dryer-freeze-protection",
+        "label": "Dryer Freeze Protection",
+        "family": "special_protections",
+        "live_selectors": [
+          {
+            "index": 12302,
+            "subindex": 24
+          }
+        ],
+        "index": 8983
+      }
+    ],
+    "machine_state": [
+      {
+        "id": "machine_state:current",
+        "label": "Machine State",
+        "family": "machine_state",
+        "live_selectors": [
+          {
+            "index": 12289,
+            "subindex": 8
+          }
+        ]
+      }
+    ],
+    "preferences": [
+      {
+        "id": "preferences:date_format",
+        "label": "Date Format Preference",
+        "family": "preferences",
+        "live_selectors": [
+          {
+            "index": 9749,
+            "subindex": 1
+          }
+        ]
+      }
+    ],
+    "es": [
+      {
+        "id": "es:controller",
+        "label": "ES Controller",
+        "family": "es",
+        "live_selectors": [
+          {
+            "index": 12563,
+            "subindex": 1
+          },
+          {
+            "index": 12563,
+            "subindex": 3
+          },
+          {
+            "index": 12563,
+            "subindex": 4
+          },
+          {
+            "index": 12563,
+            "subindex": 5
+          }
+        ]
+      }
+    ]
+  }
+}
