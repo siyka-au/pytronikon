@@ -96,7 +96,7 @@ def _discover_analog_inputs(transport: ElektronikonTransport, language_map: dict
                 "display_precision": read_byte(precision_raw, 3) if precision_raw and precision_raw != "X" else None,
                 "pressure_measurement": read_byte(pressure_measurement_raw, 2) if pressure_measurement_raw and pressure_measurement_raw != "X" else None,
                 "live_selectors": [
-                    {"index": 0x3002, "subindex": index - 0x2010 + 1}
+                    {"index": 0x3002, "subindex": index - 0x2010 + 1, "selector": format_selector(0x3002, index - 0x2010 + 1)}
                 ],
             })
 
@@ -129,7 +129,7 @@ def _discover_calculated_analog_inputs(transport: ElektronikonTransport, languag
                 "input_type": read_byte(raw, 1),
                 "display_precision": read_byte(precision_raw, 3) if precision_raw and precision_raw != "X" else None,
                 "live_selectors": [
-                    {"index": 0x3004, "subindex": index - 0x2090 + 1}
+                    {"index": 0x3004, "subindex": index - 0x2090 + 1, "selector": format_selector(0x3004, index - 0x2090 + 1)}
                 ],
             })
 
@@ -158,7 +158,7 @@ def _discover_digital_inputs(transport: ElektronikonTransport, language_map: dic
                 "mpl": mpl,
                 "label": _mpl_label(language_map, mpl),
                 "live_selectors": [
-                    {"index": 0x3003, "subindex": index - 0x20B0 + 1}
+                    {"index": 0x3005, "subindex": index - 0x20B0 + 1, "selector": format_selector(0x3005, index - 0x20B0 + 1)}
                 ],
             })
 
@@ -187,7 +187,7 @@ def _discover_digital_outputs(transport: ElektronikonTransport, language_map: di
                 "mpl": mpl,
                 "label": _mpl_label(language_map, mpl),
                 "live_selectors": [
-                    {"index": 0x3005, "subindex": index - 0x2100 + 1}
+                    {"index": 0x3006, "subindex": index - 0x2100 + 1, "selector": format_selector(0x3006, index - 0x2100 + 1)}
                 ],
             })
 
@@ -251,7 +251,7 @@ def _discover_counters(transport: ElektronikonTransport, language_map: dict[str,
                 "label": _mpl_label(language_map, mpl),
                 "counter_unit": read_byte(raw, 1),
                 "live_selectors": [
-                    {"index": 0x3007, "subindex": subindex}
+                    {"index": 0x3008, "subindex": counter_index, "selector": format_selector(0x3008, counter_index)}
                 ],
             })
 
@@ -280,7 +280,7 @@ def _discover_special_protections(transport: ElektronikonTransport, language_map
                 "mpl": mpl,
                 "label": _mpl_label(language_map, mpl),
                 "live_selectors": [
-                    {"index": 0x300E, "subindex": index - 0x2300 + 1}
+                    {"index": 0x3009, "subindex": index - 0x2330 + 1, "selector": format_selector(0x3009, index - 0x2330 + 1)}
                 ],
             })
 
@@ -372,8 +372,8 @@ def _discover_machine_state(transport: ElektronikonTransport, language_map: dict
         "label": "Machine State",
         "count": count,
         "live_selectors": (
-            [{"index": 0x3001, "subindex": 8}] +
-            ([{"index": 0x3001, "subindex": 9}] if count > 1 else [])
+            [{"index": 0x3001, "subindex": 8, "selector": format_selector(0x3001, 8)}] +
+            ([{"index": 0x3001, "subindex": 9, "selector": format_selector(0x3001, 9)}] if count > 1 else [])
         ),
         "state_labels": language_map,
     }]
@@ -450,7 +450,7 @@ def _discover_date_format(transport: ElektronikonTransport) -> list[dict]:
         "family": "preferences",
         "label": "Date Format Preference",
         "live_selectors": [
-            {"index": 0x2615, "subindex": 1}
+            {"index": 0x2615, "subindex": 1, "selector": format_selector(0x2615, 1)}
         ],
     }]
 
@@ -462,10 +462,10 @@ def _discover_es(transport: ElektronikonTransport) -> list[dict]:
         "family": "es",
         "label": "ES Controller",
         "live_selectors": [
-            {"index": 0x3113, "subindex": 1},
-            {"index": 0x3113, "subindex": 3},
-            {"index": 0x3113, "subindex": 4},
-            {"index": 0x3113, "subindex": 5},
+            {"index": 0x3113, "subindex": 1, "selector": format_selector(0x3113, 1)},
+            {"index": 0x3113, "subindex": 3, "selector": format_selector(0x3113, 3)},
+            {"index": 0x3113, "subindex": 4, "selector": format_selector(0x3113, 4)},
+            {"index": 0x3113, "subindex": 5, "selector": format_selector(0x3113, 5)},
         ],
     }]
 

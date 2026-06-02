@@ -28,3 +28,7 @@ env/
 *.swp
 *.swo
 *~
+
+# Local catalog files (generated from discover command)
+*catalog*.json
+*cat.json
