@@ -2,7 +2,7 @@
 
 import pytest
 
-from pytronikon.catalog import decode_point
+from pytronikon.catalog import Catalog, decode_point
 
 
 def test_decode_analog_input(english_language_map):
@@ -193,3 +193,58 @@ def test_decode_unsupported_family(english_language_map):
     result = decode_point(point, raw_map, english_language_map)
 
     assert result["raw"] == "12345678"
+
+
+def test_catalog_to_dict_omits_points_by_id():
+    """Test that to_dict() serializes families/family_counts but not the derived points_by_id."""
+    catalog = Catalog(
+        discovered_at="2026-01-01T00:00:00Z",
+        families={"analog_inputs": [{"id": "analog_inputs:test", "family": "analog_inputs"}]},
+        family_counts={"analog_inputs": 1},
+        points_by_id={"analog_inputs:test": {"id": "analog_inputs:test", "family": "analog_inputs"}},
+    )
+
+    data = catalog.to_dict()
+
+    assert data == {
+        "discovered_at": "2026-01-01T00:00:00Z",
+        "families": {"analog_inputs": [{"id": "analog_inputs:test", "family": "analog_inputs"}]},
+        "family_counts": {"analog_inputs": 1},
+    }
+    assert "points_by_id" not in data
+
+
+def test_catalog_from_dict_rebuilds_points_by_id():
+    """Test that from_dict() reconstructs points_by_id from families."""
+    data = {
+        "discovered_at": "2026-01-01T00:00:00Z",
+        "families": {
+            "analog_inputs": [{"id": "analog_inputs:a", "family": "analog_inputs"}],
+            "counters": [{"id": "counters:b", "family": "counters"}],
+        },
+        "family_counts": {"analog_inputs": 1, "counters": 1},
+    }
+
+    catalog = Catalog.from_dict(data)
+
+    assert catalog.discovered_at == "2026-01-01T00:00:00Z"
+    assert catalog.family_counts == {"analog_inputs": 1, "counters": 1}
+    assert set(catalog.points_by_id) == {"analog_inputs:a", "counters:b"}
+    assert catalog.points_by_id["analog_inputs:a"]["family"] == "analog_inputs"
+
+
+def test_catalog_to_dict_from_dict_round_trip():
+    """Test that from_dict(to_dict(catalog)) reproduces an equivalent catalog."""
+    original = Catalog(
+        discovered_at="2026-01-01T00:00:00Z",
+        families={"digital_inputs": [{"id": "digital_inputs:x", "family": "digital_inputs"}]},
+        family_counts={"digital_inputs": 1},
+        points_by_id={"digital_inputs:x": {"id": "digital_inputs:x", "family": "digital_inputs"}},
+    )
+
+    restored = Catalog.from_dict(original.to_dict())
+
+    assert restored.discovered_at == original.discovered_at
+    assert restored.families == original.families
+    assert restored.family_counts == original.family_counts
+    assert restored.points_by_id == original.points_by_id

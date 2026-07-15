@@ -103,7 +103,7 @@ def test_client_unknown_point_after_discovery():
         family_counts={},
         points_by_id={},
     )
-    client._catalog = empty_catalog
+    client.load_catalog(empty_catalog)
 
     with pytest.raises(UnknownPointError) as exc_info:
         client.query(points=["analog_inputs:nonexistent"])
@@ -130,7 +130,7 @@ def test_client_unknown_family_after_discovery():
         family_counts={},
         points_by_id={},
     )
-    client._catalog = empty_catalog
+    client.load_catalog(empty_catalog)
 
     with pytest.raises(UnknownFamilyError) as exc_info:
         client.query(families=["nonexistent_family"])
@@ -169,3 +169,67 @@ def test_client_custom_host():
     """Test that custom host is used."""
     client = ElektronikonClient(host="10.10.10.10")
     assert client.transport.host == "10.10.10.10"
+
+
+def test_client_load_catalog_enables_query_without_discover(mock_transport):
+    """Test that load_catalog() lets query(all_discovered=True) work without calling discover()."""
+    from pytronikon.catalog import Catalog
+
+    transport, conn = mock_transport
+    language_response = FakeResponse(body=b"dummy$$test\r\n")
+    query_response = FakeResponse(body=b"1B520080")
+    conn.set_responses([language_response, query_response])
+
+    catalog = Catalog(
+        discovered_at="2026-01-01T00:00:00Z",
+        families={
+            "analog_inputs": [
+                {
+                    "id": "analog_inputs:test",
+                    "family": "analog_inputs",
+                    "live_selectors": [{"index": 0x3002, "subindex": 1}],
+                }
+            ]
+        },
+        family_counts={"analog_inputs": 1},
+        points_by_id={
+            "analog_inputs:test": {
+                "id": "analog_inputs:test",
+                "family": "analog_inputs",
+                "live_selectors": [{"index": 0x3002, "subindex": 1}],
+            }
+        },
+    )
+
+    client = ElektronikonClient(transport=transport)
+    client.load_catalog(catalog)
+
+    result = client.query(all_discovered=True)
+
+    assert result["catalog_summary"] == {"analog_inputs": 1}
+    assert len(result["point_results"]) == 1
+    assert result["point_results"][0]["id"] == "analog_inputs:test"
+
+
+def test_client_load_catalog_round_trip_via_dict(mock_transport):
+    """Test that a catalog serialized with to_dict() and restored with from_dict() works via load_catalog()."""
+    from pytronikon.catalog import Catalog
+
+    transport, conn = mock_transport
+
+    original = Catalog(
+        discovered_at="2026-01-01T00:00:00Z",
+        families={"digital_inputs": [{"id": "digital_inputs:x", "family": "digital_inputs", "live_selectors": []}]},
+        family_counts={"digital_inputs": 1},
+        points_by_id={"digital_inputs:x": {"id": "digital_inputs:x", "family": "digital_inputs", "live_selectors": []}},
+    )
+
+    restored = Catalog.from_dict(original.to_dict())
+
+    client = ElektronikonClient(transport=transport)
+    client.load_catalog(restored)
+
+    # No selectors to query for this point, so no HTTP call is made -- just confirm
+    # query(all_discovered=True) no longer raises UsageError after load_catalog().
+    result = client.query(all_discovered=True)
+    assert result["point_results"][0]["id"] == "digital_inputs:x"

@@ -111,6 +111,19 @@ class ElektronikonClient:
         self._catalog = discover_catalog(self.transport, language_map)
         return self._catalog
 
+    def load_catalog(self, catalog: Catalog) -> None:
+        """Load a previously-discovered catalog without querying the controller.
+
+        Use this to restore a catalog cached from an earlier discover() call
+        (e.g. loaded from disk via Catalog.from_dict()), enabling query() by
+        point ID, family, or all_discovered without re-running discovery.
+
+        Args:
+            catalog: A Catalog, typically produced by an earlier discover()
+                call or rebuilt via Catalog.from_dict().
+        """
+        self._catalog = catalog
+
     def query(
         self,
         *,
