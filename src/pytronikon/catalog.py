@@ -484,6 +484,42 @@ class Catalog:
     family_counts: dict[str, int]
     points_by_id: dict[str, dict]
 
+    def to_dict(self) -> dict:
+        """Serialize the catalog to a plain, JSON-able dict.
+
+        Returns:
+            A dict with keys "discovered_at", "families", and "family_counts".
+            "points_by_id" is omitted since it's derivable from "families".
+        """
+        return {
+            "discovered_at": self.discovered_at,
+            "families": self.families,
+            "family_counts": self.family_counts,
+        }
+
+    @classmethod
+    def from_dict(cls, data: dict) -> "Catalog":
+        """Rebuild a Catalog from a dict produced by to_dict().
+
+        Args:
+            data: A dict with "discovered_at", "families", and "family_counts" keys.
+
+        Returns:
+            A Catalog with points_by_id rebuilt from families.
+        """
+        families = data["families"]
+        points_by_id = {
+            point["id"]: point
+            for points in families.values()
+            for point in points
+        }
+        return cls(
+            discovered_at=data["discovered_at"],
+            families=families,
+            family_counts=data["family_counts"],
+            points_by_id=points_by_id,
+        )
+
 
 def discover_catalog(transport: ElektronikonTransport, language_map: dict[str, str]) -> Catalog:
     """Discover all available points on the controller.
